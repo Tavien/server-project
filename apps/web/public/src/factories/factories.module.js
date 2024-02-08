@@ -1,17 +1,17 @@
 export const factoriesModule = angular.module('factories', [])
   .factory('Server', [
-    '$resource', 
-    function($resource) {
-      return $resource('/servers/:id', {id: '@_id'},{
-        stop:{
+    '$resource',
+    function ($resource) {
+      return $resource('/servers/:id', { id: '@_id' }, {
+        stop: {
           url: '/servers/:id/stop',
-          method:'get',
-          isArray:false,
+          method: 'get',
+          isArray: false,
         },
-        start:{
+        start: {
           url: '/servers/:id/start',
-          method:'get',
-          isArray:false,
+          method: 'get',
+          isArray: false,
         },
         restart: {
           url: '/servers/:id/restart',
@@ -21,25 +21,31 @@ export const factoriesModule = angular.module('factories', [])
       });
     }
   ])
+  .factory("Group", [
+    "$resource",
+    function ($resource) {
+      return $resource("/groups/:id", { id: "@_id" });
+    },
+  ])
   .factory('Task', [
-    '$resource', 
-    function($resource) {
-      return $resource('/tasks/:id', {id: '@_id'},{
-        addRandom:{
+    '$resource',
+    function ($resource) {
+      return $resource('/tasks/:id', { id: '@_id' }, {
+        addRandom: {
           url: '/tasks/add-random',
-          method:'get',
+          method: 'get',
           isArray: false,
         }
       });
     }
   ])
   .factory('Charts', [
-    '$resource', 
-    function($resource) {
-      return $resource('/charts', {},{
+    '$resource',
+    function ($resource) {
+      return $resource('/charts', {}, {
         serverCharts: {
           url: '/charts/:serverId',
-          method:'get',
+          method: 'get',
           isArray: false,
         }
       });

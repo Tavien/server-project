@@ -19,10 +19,14 @@ export const serversModule = angular.module('servers', [])
     templateUrl: '/partials/servers/edit',
     controller: [
       'Server',
+      'Group',
       '$stateParams',
       '$state',
       'NotificationService',
-      function (Server, $stateParams, $state, NotificationService) {
+      function (Server, Group, $stateParams, $state, NotificationService) {
+        Group.query().$promise.then((groups) => {
+          this.groups = groups;
+        })
         if ($stateParams.id) {
           this.server = Server.get({ id: $stateParams.id });
         } else {
@@ -40,11 +44,17 @@ export const serversModule = angular.module('servers', [])
     templateUrl: '/partials/servers/view',
     controller: [
       'Server',
+      'Group',
       '$stateParams',
       'NotificationService',
       'Charts',
-      function (Server, $stateParams, NotificationService, Charts) {
+      function (Server, Group, $stateParams, NotificationService, Charts) {
         this.server = Server.get({ id: $stateParams.id });
+        this.server.$promise.then((server) => {
+          Group.get({ id: server.groupId }).$promise.then((group) => {
+            this.group = { name: group.name };
+          })
+        });
         this.charts = Charts.serverCharts({ serverId: $stateParams.id });
         this.start = function () {
           if (confirm('Вы хотите запустить сервер?')) {
