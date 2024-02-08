@@ -136,7 +136,10 @@ async function restart_server(req, res) {
       _id: req.params.id,
     });
     
-    server.status = 'restarted';
+    // reboot ¯\_(ツ)_/¯
+    server.status = 'stoped';
+    await server.save();
+    server.status = 'started';
     await server.save();
 
     await UserAction.create({
