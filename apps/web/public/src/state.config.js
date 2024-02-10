@@ -50,6 +50,6 @@ export default function stateConfig($stateProvider, $urlRouterProvider) {
     .state({
       name: 'charts',
       url: '/charts',
-      component: 'chartsMain',
+      component: 'chartsView',
     })
 }
